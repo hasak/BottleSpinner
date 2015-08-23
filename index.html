@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <link rel="icon" href="gb.png">
+  <style>
+  button {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+button:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+  </style>
+<title>Bottle spinner</title>
+</head>
+<body>
+<center><div><canvas id="canvas" width="400" height="400"
+style="background-color:#fff;display:none;">
+</canvas><img id="slii" src="gb.png" style="height:100px;width:auto;position:relative;bottom: 250px;cursor:pointer;display:none;"></div>
+  <br><br>
+<div id="divv" style="display:none;"><span id="kojii" style="font-size:20pt;font-family:Verdana;"></span><br><br><button onclick="truths()">Truth</button><button onclick="dares()">Dare</button></div>
+<br><br><div id="divpit" style="font-size:15pt;font-family:Verdana;display:none;"></div>
+<script>
+var br;
+var canvas = document.getElementById("canvas");
+var canvasa = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var ctxa=canvasa.getContext("2d");
+var radius = canvas.height / 2;
+var dok=document.getElementsByClassName("klas");
+/*$(document).ready(function(){
+    $( '#but' ).click(function() {
+      $("div#divpit").html(" ");
+    });
+});*/
+//var niz=["Himzo","Cosa","Jos_neko"];
+//var br=2;
+//var prv=true;
+ctx.translate(radius, radius);
+radius = radius * 0.90;
+//drawClock();
+//setInterval(drawClock, 10);
+
+function drawClock() {
+  //br=3; //Broj igraca//
+  
+  
+  document.getElementById("canvas").style.display="block";
+  document.getElementById("slii").style.display="block";
+  document.getElementById("brr").style.display="none";
+  document.getElementById("but").style.display="none";
+  document.getElementById("but2").style.display="none";
+  //
+
+  document.getElementById("inputi").style.display="none";
+var nj;
+
+  br=document.getElementById("brr").value;
+  if(br>=9){
+
+    document.getElementById("brr").value=8;
+    br=8;
+  }
+if(br<=1){
+
+    document.getElementById("brr").value=2;
+    br=2;
+  }
+/*for(nj=0;nj<br;nj++)
+{
+  var tz=nj.toString();
+  niz[nj]=document.getElementById(tz).value;
+}*/
+  drawFace(ctx, radius);
+  drawTime(ctx, radius,br);
+  drawNumbers(ctxa, radius,br);
+}
+
+function drawFace(ctx, radius) {
+  var grad;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  ctx.fillStyle = '#aaa';
+  ctx.fill();
+  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+  grad.addColorStop(0, '#333');
+  grad.addColorStop(0.5, 'white');
+  grad.addColorStop(1, '#333');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = radius*0.1;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, radius*0.01, 0, 2*Math.PI);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+}
+
+function drawNumbers(ctx, radius, nuu) {
+  var ang;
+  var num;
+
+  //ctx = canvasa.getContext("2d");
+  ctx.font = radius*0.15 + "px arial";
+
+  ctx.textBaseline="middle";
+  ctx.textAlign="center";
+    ang = 2 * Math.PI / nuu;
+ctx.rotate(-ang/2);
+  for(num = 0; num < nuu; num++){ang = 2 * Math.PI / nuu;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    //ctx.rotate(-ang);
+    ctx.fillText(dok[num].value, 0, 0);
+    //ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    //ctx.rotate(-ang);
+  }
+}
+
+
+function drawTime(ctx, radius, n){
+    for(i=0;i<n;i++)
+    drawHand(ctx, i*2*Math.PI/n, radius, radius*0.01);
+}
+
+
+
+function drawHand(ctx, pos, length, width) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.moveTo(0,0);
+    ctx.rotate(pos);
+    ctx.lineTo(0, -length);
+    ctx.stroke();
+    ctx.rotate(-pos);
+
+}/*function drawNumbers(ctx, radius, ne) {
+    var ang;
+    var num;
+    ctx.font = radius*0.15 + "px arial";
+    ctx.textBaseline="middle";
+    ctx.textAlign="center";
+    for(num= 0; num < ne; num++){
+        ang = 2 * Math.PI / ne+(2 * Math.PI / ne)/2;
+        ctx.rotate(ang);
+        ctx.translate(0, -radius*0.85);
+        //ctx.rotate(-ang);
+        ctx.fillText("Himzo", 0, 0);
+        //ctx.rotate(ang);
+        ctx.translate(0, radius*0.85);
+        //ctx.rotate(-ang);
+    }
+}*/
+</script>
+
+
+<script>
+var dege=0;
+var inter=0;
+//if(inter<100)
+//function poz(){
+  //while()
+  //inter=10.0;
+  //if(inter>0)
+// while(dege<200)
+//setTimeout(bnr,10); 
+
+//else inter=10.0;
+/*for(int i=0;i<inter/2;i++){
+
+  sleep(1000);
+  inter-=1;
+}*/
+    $("#slii").click(function(){
+      $("#divv").hide();
+      
+  document.getElementById("divpit").innerHTML="&nbsp";
+      inter=inter+Math.floor((Math.random() * 680) + 458);
+$('#slii').animate({  borderSpacing: inter }, {
+    step: function(now,fx) {
+      $(this).css('-webkit-transform','rotate('+now+'deg)'); 
+      $(this).css('-moz-transform','rotate('+now+'deg)');
+      $(this).css('transform','rotate('+now+'deg)');
+    },
+    duration:3000,complete:function(){$("#divv").show();
+
+
+var el = document.getElementById("slii");
+var st = window.getComputedStyle(el, null);
+var tr = st.getPropertyValue("-webkit-transform") ||
+         st.getPropertyValue("-moz-transform") ||
+         st.getPropertyValue("-ms-transform") ||
+         st.getPropertyValue("-o-transform") ||
+         st.getPropertyValue("transform") ||
+         "FAIL";
+
+// With rotate(30deg)...
+// matrix(0.866025, 0.5, -0.5, 0.866025, 0px, 0px)
+//console.log('Matrix: ' + tr);
+
+// rotation matrix - http://en.wikipedia.org/wiki/Rotation_matrix
+
+var values = tr.split('(')[1].split(')')[0].split(',');
+var a = values[0];
+var b = values[1];
+var c = values[2];
+var d = values[3];
+
+var scale = Math.sqrt(a*a + b*b);
+
+//console.log('Scale: ' + scale);
+
+// arc sin, convert from radians to degrees, round
+var sin = b/scale;
+// next line works for 30deg but not 130deg (returns 50);
+// var angle = Math.round(Math.asin(sin) * (180/Math.PI));
+var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+if(angle<0)
+  angle+=360;
+//console.log('Rotate: ' + angle + 'deg');
+var neka;
+var ink=0;
+while(angle>360/br)
+{
+  angle-=360/br;
+  ink+=1;
+}
+if(dok[ink].value!="")
+var nrz=dok[ink].value;
+else var nrz="Bezimeni";
+    $("#kojii").html("Igrac "+nrz+" je na redu");}
+},'linear');
+    });
+  /*function togg()
+  {
+    var bz=document.getElementById("divv");
+    if(bz.style.display=="none")
+      bz.style.display="block";
+    else bz.style.display="none";
+  }*/
+//inter=inter+10;
+
+//setTimeout(bnr(),inter); 
+
+//setTimeout(bnr,10);
+/*function bnr()
+{
+  while(inter>0)
+    {var slik=document.getElementById("slii");
+slik.style.webkitTransform = 'rotate('+dege+'deg)';
+slik.style.transform='rotate('+dege+'deg)';
+dege=dege+inter;
+inter=inter-0.1;}*/
+ //delay(10);
+//return;
+  function truths()
+  {
+    document.getElementById("divv").style.display="none";
+    var koji=Math.floor((Math.random() * 29) + 0);
+    var thr =[
+    "If you couldn't go to the college or get the job of your dreams, what would you do?",
+      "What is one thing you've never told anyone else?",
+      "What do you want to be when you grow up?",
+      "If you could switch places with someone for a day, who would it be?",
+      "If you could invent anything, what would it be?",
+      "If you knew the world was about to end, what would you do?",
+      "If you could be born again, who would you come back as?",
+      "Are you scared of dying? Why?",
+      "What is your biggest fear?",
+      "What happened on the worst day of your life?",
+      "Have you ever sang and danced in the grocery store?",
+      "If you could be a superhero, what would your power be?",
+      "What would you do if you were invisible for a day?",
+      "If you life were made into a movie, who would play you?",
+      "What would you do with a million dollars if you ever won the lottery?",
+      "Do you like anyone in this room at the moment",
+      "What is the longest you have gone without taking a bath?",
+      "If you and someone else were the only people alive on earth, who would you pick the other person to be?",
+      "Who in this room would be the worst to be trapped in an elevator with? ",
+      "What are you afraid of? ",
+      "What fear keeps you up at night? ",
+      "In what way are you inadequate? ",
+      "Who is the last person that you stalked via social media?",
+      "What is the wildest event that you have done in your life?",
+      "Of all the people in this room, who would you date? And why did you pick that person?",
+      "What is the worst birthday gift you have ever received?",
+      "If you only had 24 hours to live, what would you do in these hours?",
+      "If you were stuck on a deserted island, which friend would you want with you?",
+      "Have you ever stolen anything?",
+      "What do you think is your biggest physical flaw?"];
+      $("#divpit").show();
+      $("#divpit").html(thr[koji]);
+      //alert(thr[koji]);
+  }
+  function zainp()
+  {
+    var brigr=document.getElementById("brr").value;
+    var inp=document.getElementById("inputi");
+    var icc;
+    inp.innerHTML="";
+    for(icc=0;icc<brigr;icc++)
+      inp.innerHTML+="<input id="+icc+" class="+"klas"+"><br><br>";
+  }
+
+  function dares()
+  {
+    document.getElementById("divv").style.display="none";
+    var koji2=Math.floor((Math.random() * 22) + 0);
+    var drs=["Kiss the player right to you,in the cheek",
+      "Kiss the player left to you,in the cheek",
+      "Yell:'I got a big butt,a big big butt",
+      "Stare at someones eyes for 20 secconds awkwardly",
+      "Sing your favorite song for 10 seconds",
+            "Call a friend and tell them that you saw an alien spaceship and that you know he is an alien",
+      "Jump 5 times in the air and say 'jump' each time you jump",
+      "Get on all four legs and yell 'auuuuuuuu'",
+      "Kiss your hand seductively for 10 seconds",
+      "Pretend you are eating food and make sounds with your mouth open",
+      "Take your shirt off",
+      "Hug a random person and do not let go for 20 seconds",
+      "Close your eyes for 30 seconds and DO NOT open them (Other players,make funny movements while his eyes are closed)",
+      "Bark like a dog",
+      "Pound your chest and do your best Tarzan yell.","Dance wildly without any music","Talk in a strange accent for the rest of the night",
+      "Do/attempt a handstand","Dance like a ballerina","Do the robot dance","Make a funny face","Pretend you can't hear anyone for 5 minutes",
+      "Give the player to the left of you a piggy back ride",
+      "Let the person next to you text anyone from your phone.",
+      "Have a two minute conversation with an inanimate object.",
+      "Give your best snort for the group.",
+      "Bite into a lemon slice",
+      "Go outside or somewhere public and do the chicken dance",
+      "Act out a scene from your favorite movie.",
+      "Give a piggyback ride to the person that is seated next to you."];
+      $("#divpit").show();
+      //alert(drs[koji2]);
+      $("#divpit").html(drs[koji2]);
+  }
+//inter=Math.floor((Math.random() * 20) + 10);return;
+//}
+
+
+
+//}
+/*function delay(ms) {
+        var cur_d = new Date();
+        var cur_ticks = cur_d.getTime();
+        var ms_passed = 0;
+        while(ms_passed < ms) {
+            var d = new Date();  // Possible memory leak?
+            var ticks = d.getTime();
+            ms_passed = ticks - cur_ticks;
+            // d = null;  // Prevent memory leak?
+        }
+    }}*/
+   /* function refresh(node)
+{
+   var times = 3000; // gap in Milli Seconds;
+
+   (function startRefresh()
+   {
+      var address;
+      if(node.src.indexOf('?')>-1)
+       address = node.src.split('?')[0];
+      else 
+       address = node.src;
+      node.src = address+"?time="+new Date().getTime();
+
+      setTimeout(startRefresh,times);
+   })();
+
+}*/
+</script>
+<h2 id="but2" style="font-family:calibri;">Broj igraca: <input type="number" name="broj" id="brr" min="2" max="8" value="2" onchange="zainp()" size="20"/></h2><br>
+<div id="inputi"><input id="0" class="klas"><br><br><input id="1" class="klas"></div><br>
+<button id="but" onclick="drawClock()" style="width:300px; height:75px;font-size:30pt;">Zaigraj :D</button></center>
+
+</body>
+</html>
+ 
