@@ -1,4 +1,4 @@
-# BottleSpinner - Truth or Dare 🎉
+# BottleSpinner - Truth or Dare
 A browser-based party game that combines **Spin the Bottle** with **Truth or Dare**.
 Players enter their names, spin the bottle, and the chosen player must pick between random truth questions or dares.
 
